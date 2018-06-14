@@ -17,7 +17,7 @@ module Tokite
     end
 
     def create
-      if params[:names].present?
+      if params[:names]
         params[:names].each do |name|
           github_repo = octokit_client.repository(name)
           Repository.hook!(octokit_client, github_repo)
