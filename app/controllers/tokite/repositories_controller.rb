@@ -17,11 +17,13 @@ module Tokite
     end
 
     def create
-      params[:names].each do |name|
-        github_repo = octokit_client.repository(name)
-        Repository.hook!(octokit_client, github_repo)
+      unless params[:names].blank?
+        params[:names].each do |name|
+          github_repo = octokit_client.repository(name)
+          Repository.hook!(octokit_client, github_repo)
+        end
+        flash[:info] = "Import repositories."
       end
-      flash[:info] = "Import repositories."
       redirect_to repositories_path
     end
 
